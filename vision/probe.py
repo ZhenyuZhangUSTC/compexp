@@ -1,5 +1,6 @@
 import settings
 from loader.model_loader import loadmodel
+from loader.model_loader_sparse import loadmodel as loadmodel_sparse
 from dissection.neuron import hook_feature, NeuronOperator
 from dissection import contrib
 from visualize.report import (
@@ -47,8 +48,10 @@ def spread_contrs(weights, contrs, layernames):
         for i in range(len(layernames))
     ]
 
-
-model = loadmodel(hook_feature, hook_modules=hook_modules)
+if settings.DATASET == 'imagenet_s':
+    model = loadmodel_sparse(hook_feature, hook_modules=hook_modules)
+else:
+    model = loadmodel(hook_feature, hook_modules=hook_modules)
 fo = NeuronOperator()
 
 # ==== STEP 1: Feature extraction ====

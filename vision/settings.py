@@ -5,8 +5,8 @@ Configurable settings for probing
 GPU = True  # running on GPU is highly suggested
 INDEX_FILE = "index_ade20k.csv"  # Which index file to use? If _sm, use test mode
 CLEAN = False  # set to "True" if you want to clean the temporary large files after generating result
-MODEL = "resnet18"  # model arch: resnet18, alexnet, resnet50, densenet161
-DATASET = "places365"  # model trained on: places365 or imagenet. If None,use untrained resnet (random baseline)
+MODEL = "resnet50"  # model arch: resnet18, alexnet, resnet50, densenet161
+DATASET = "imagenet_s"  # model trained on: places365 or imagenet. If None,use untrained resnet (random baseline)
 MODEL_CHECKPOINT = None  # model training checkpoint. None if not used
 MODEL_DATA_PERCENT = None  # model data percent (e.g. for places365). None if not used
 
@@ -37,7 +37,7 @@ SEMANTIC_CONSISTENCY = False  # Evaluate semantic consistency of formulas
 
 # Beam search params
 FORMULA_COMPLEXITY_PENALTY = 1.00  # How much to downweight formulas by their length
-BEAM_SEARCH_LIMIT = 50  # (artificially) limit beam to this many candidates. If beam search takes a while, setting this to e.g. 50 can get you reasonably good explanations in much less time.
+BEAM_SEARCH_LIMIT = None  # (artificially) limit beam to this many candidates. If beam search takes a while, setting this to e.g. 50 can get you reasonably good explanations in much less time.
 BEAM_SIZE = 5  # Size of the beam when doing formula search
 MAX_FORMULA_LENGTH = 3  # Maximum compositional formula length
 
@@ -87,6 +87,8 @@ if DATASET == "places365":
     NUM_CLASSES = 365
 elif DATASET == "imagenet":
     NUM_CLASSES = 1000
+elif DATASET == "imagenet_s":
+    NUM_CLASSES = 1000
 elif DATASET == "ade20k":
     NUM_CLASSES = 365
 
@@ -133,7 +135,10 @@ if DATASET == "places365":
         MODEL_FILE = f"zoo/trained/places365/resnet18{datapctstr}/resnet18_{MODEL_CHECKPOINT}.pth.tar"
     MODEL_PARALLEL = True
 elif DATASET == "imagenet":
-    MODEL_FILE = None
+    MODEL_FILE = f"zoo/torch.pt"
+    MODEL_PARALLEL = False
+elif DATASET == "imagenet_s":
+    MODEL_FILE = f"zoo/PT_torchvision_sparsity33.pth.tar"
     MODEL_PARALLEL = False
 elif DATASET == "ade20k":
     MODEL_FILE = f"zoo/trained/{mbase}_ade20k_finetune/{MODEL_CHECKPOINT}.pth"
