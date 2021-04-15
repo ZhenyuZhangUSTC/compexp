@@ -89,6 +89,8 @@ elif DATASET == "imagenet":
     NUM_CLASSES = 1000
 elif DATASET == "imagenet_s":
     NUM_CLASSES = 1000
+elif DATASET == "imagenet_s_rp":
+    NUM_CLASSES = 1000
 elif DATASET == "ade20k":
     NUM_CLASSES = 365
 
