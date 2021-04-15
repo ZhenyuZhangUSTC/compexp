@@ -48,7 +48,7 @@ def spread_contrs(weights, contrs, layernames):
         for i in range(len(layernames))
     ]
 
-if settings.DATASET == 'imagenet_s':
+if settings.DATASET == 'imagenet_s' or settings.DATASET == 'imagenet_s_rp':
     model = loadmodel_sparse(hook_feature, hook_modules=hook_modules)
 else:
     model = loadmodel(hook_feature, hook_modules=hook_modules)
