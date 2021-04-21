@@ -173,16 +173,16 @@ def make_card_html(
 
         html_imfn_alpha = os.path.basename(html_imfn).replace(".jpg", ".png")
 
-        pred, target = preds[index]
-        pred_name = ade20k.I2S[pred]
-        target_name = f"{ds.scene(index)}-s"
-        wrclass = "correct " if pred_name == target_name else "incorrect"
+        # pred, target = preds[index]
+        # pred_name = ade20k.I2S[pred]
+        # target_name = f"{ds.scene(index)}-s"
+        # wrclass = "correct " if pred_name == target_name else "incorrect"
 
-        img_html = f'<img loading="lazy" class="mask-img" data-masked="true" src="{html_imfn}" height="{imscale}" style="-webkit-mask-image: url(image/this-mask-{unit}-{html_imfn_alpha})" id="{unit}-{i}" data-uname="{unit}" data-imfn="{html_imfn_alpha}">'
-        img_infos = [f"pred = {pred_name}", f"target = {target_name}"]
-        html.append(
-            html_common.wrap_image(img_html, wrapper_classes=[wrclass], infos=img_infos)
-        )
+        # img_html = f'<img loading="lazy" class="mask-img" data-masked="true" src="{html_imfn}" height="{imscale}" style="-webkit-mask-image: url(image/this-mask-{unit}-{html_imfn_alpha})" id="{unit}-{i}" data-uname="{unit}" data-imfn="{html_imfn_alpha}">'
+        # img_infos = [f"pred = {pred_name}", f"target = {target_name}"]
+        # html.append(
+        #     html_common.wrap_image(img_html, wrapper_classes=[wrclass], infos=img_infos)
+        # )
 
         # Load default mask for this unit
         unit_maskfn = f"this-mask-{unit}-{html_imfn_alpha}"
@@ -191,14 +191,24 @@ def make_card_html(
             mask = html_common.create_mask(index, unit, features, thresholds)
             mask.save(ed.filename(f"html/image/{unit_maskfn}"))
 
-        for cunit in all_contrs:
-            # PREVIOUS features
-            maskfn = f"mask-{cunit}-{html_imfn_alpha}"
-            if force or not ed.has(f"html/image/{maskfn}"):
-                mask = html_common.create_mask(
-                    index, cunit, prev_features, prev_thresholds
-                )
-                mask.save(ed.filename(f"html/image/{maskfn}"))
+
+        pred, target = preds[index]
+        wrclass = "correct " if pred == target else "incorrect"
+
+        img_html = f'<img loading="lazy" class="mask-img" data-masked="true" src="{html_imfn}" height="{imscale}" style="-webkit-mask-image: url(image/this-mask-{unit}-{html_imfn_alpha})" id="{unit}-{i}" data-uname="{unit}" data-imfn="{html_imfn_alpha}">'
+        img_infos = [f"pred = {pred}", f"target = {target}"]
+        html.append(
+            html_common.wrap_image(img_html, wrapper_classes=[wrclass], infos=img_infos)
+        )
+
+        # for cunit in all_contrs:
+        #     # PREVIOUS features
+        #     maskfn = f"mask-{cunit}-{html_imfn_alpha}"
+        #     if force or not ed.has(f"html/image/{maskfn}"):
+        #         mask = html_common.create_mask(
+        #             index, cunit, prev_features, prev_thresholds
+        #         )
+        #         mask.save(ed.filename(f"html/image/{maskfn}"))
 
     html.append("</div>")
 
