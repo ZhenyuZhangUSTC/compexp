@@ -6,7 +6,7 @@ GPU = True  # running on GPU is highly suggested
 INDEX_FILE = "index_ade20k.csv"  # Which index file to use? If _sm, use test mode
 CLEAN = False  # set to "True" if you want to clean the temporary large files after generating result
 MODEL = "resnet50"  # model arch: resnet18, alexnet, resnet50, densenet161
-DATASET = "imagenet_s_rp"  # model trained on: places365 or imagenet. If None,use untrained resnet (random baseline)
+DATASET = "imagenet"  # model trained on: places365 or imagenet. If None,use untrained resnet (random baseline)
 MODEL_CHECKPOINT = None  # model training checkpoint. None if not used
 MODEL_DATA_PERCENT = None  # model data percent (e.g. for places365). None if not used
 
