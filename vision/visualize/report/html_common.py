@@ -50,7 +50,7 @@ def create_mask(index, unit, features, thresholds, imsize=settings.IMG_SIZE):
     thresh = thresholds[unit]
     mask = (feats > thresh).astype(np.uint8) * 255
     mask = np.clip(mask, 50, 255)
-    mask = Image.fromarray(mask).resize((imsize, imsize), resample=Image.NEAREST)
+    mask = Image.fromarray(mask).resize((imsize, imsize), resample=Image.BILINEAR)
     # All black
     mask_alpha = Image.fromarray(np.zeros((imsize, imsize), dtype=np.uint8), mode="L")
     mask_alpha.putalpha(mask)

@@ -23,8 +23,6 @@ def noop(*args, **kwargs):
 
 
 layernames = list(map(safe_layername, settings.FEATURE_NAMES))
-
-
 hook_modules = []
 
 

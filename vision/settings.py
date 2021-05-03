@@ -6,7 +6,11 @@ GPU = True  # running on GPU is highly suggested
 INDEX_FILE = "index_ade20k.csv"  # Which index file to use? If _sm, use test mode
 CLEAN = False  # set to "True" if you want to clean the temporary large files after generating result
 MODEL = "resnet50"  # model arch: resnet18, alexnet, resnet50, densenet161
-DATASET = "imagenet_s_rp"  # model trained on: places365 or imagenet. If None,use untrained resnet (random baseline)
+DATASET = "imagenet_dense"  # model trained on: places365 or imagenet. If None,use untrained resnet (random baseline)
+#DATASET = "imagenet_lth_4"
+#DATASET = "imagenet_lth_5"
+#DATASET = "imagenet_rp_4"
+#DATASET = "imagenet_rp_5"
 MODEL_CHECKPOINT = None  # model training checkpoint. None if not used
 MODEL_DATA_PERCENT = None  # model data percent (e.g. for places365). None if not used
 
@@ -18,7 +22,7 @@ SCORE_THRESHOLD = 0.04  # the threshold used for IoU score (in HTML file)
 CONTRIBUTIONS = True  # If True, assume successive layers feed into each other; will use weights of layer i+1 to identify neurons contributing to layer i
 TOPN = 5  # to show top N image with highest activation for each unit
 PARALLEL = (
-    8  # how many process is used for tallying
+    12  # how many process is used for tallying
 )
 CATEGORIES = [
     "object",
@@ -87,9 +91,15 @@ if DATASET == "places365":
     NUM_CLASSES = 365
 elif DATASET == "imagenet":
     NUM_CLASSES = 1000
-elif DATASET == "imagenet_s":
+elif DATASET == "imagenet_dense":
     NUM_CLASSES = 1000
-elif DATASET == "imagenet_s_rp":
+elif DATASET == "imagenet_lth_4":
+    NUM_CLASSES = 1000
+elif DATASET == "imagenet_lth_5":
+    NUM_CLASSES = 1000
+elif DATASET == "imagenet_rp_4":
+    NUM_CLASSES = 1000
+elif DATASET == "imagenet_rp_5":
     NUM_CLASSES = 1000
 elif DATASET == "ade20k":
     NUM_CLASSES = 365
@@ -136,14 +146,21 @@ if DATASET == "places365":
         datapctstr = f"_{MODEL_DATA_PERCENT}" if MODEL_DATA_PERCENT is not None else ""
         MODEL_FILE = f"zoo/trained/places365/resnet18{datapctstr}/resnet18_{MODEL_CHECKPOINT}.pth.tar"
     MODEL_PARALLEL = True
-elif DATASET == "imagenet":
-    MODEL_FILE = f"zoo/torch.pt"
+
+elif DATASET == "imagenet_dense":
+    MODEL_FILE = f"zoo/LT_dense.pth.tar"
     MODEL_PARALLEL = False
-elif DATASET == "imagenet_s":
-    MODEL_FILE = f"zoo/PT_torchvision_sparsity33.pth.tar"
+elif DATASET == "imagenet_lth_4":
+    MODEL_FILE = f"zoo/LT_4.pth.tar"
     MODEL_PARALLEL = False
-elif DATASET == "imagenet_s_rp":
-    MODEL_FILE = f"zoo/RPT_torchvision_sparsity33.pth.tar"
+elif DATASET == "imagenet_lth_5":
+    MODEL_FILE = f"zoo/LT_5.pth.tar"
+    MODEL_PARALLEL = False
+elif DATASET == "imagenet_rp_4":
+    MODEL_FILE = f"zoo/RP_4.pth.tar"
+    MODEL_PARALLEL = False
+elif DATASET == "imagenet_rp_5":
+    MODEL_FILE = f"zoo/RP_5.pth.tar"
     MODEL_PARALLEL = False
 elif DATASET == "ade20k":
     MODEL_FILE = f"zoo/trained/{mbase}_ade20k_finetune/{MODEL_CHECKPOINT}.pth"
