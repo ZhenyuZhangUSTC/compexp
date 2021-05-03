@@ -26,6 +26,7 @@ def loadmodel(
         )
     else:
         checkpoint = torch.load(settings.MODEL_FILE, map_location='cpu')
+        print('load model from {}'.format(settings.MODEL_FILE))
         if (
             type(checkpoint).__name__ == "OrderedDict"
             or type(checkpoint).__name__ == "dict"
@@ -44,7 +45,8 @@ def loadmodel(
 
             #extract mask
             current_mask = utils_pruning.extract_mask(state_dict)
-            utils_pruning.prune_model_custom(model, current_mask)
+            if len(current_mask):
+                utils_pruning.prune_model_custom(model, current_mask)
             model.load_state_dict(state_dict)
             utils_pruning.check_sparsity(model)
         else:
