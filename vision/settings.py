@@ -22,7 +22,7 @@ SCORE_THRESHOLD = 0.04  # the threshold used for IoU score (in HTML file)
 CONTRIBUTIONS = True  # If True, assume successive layers feed into each other; will use weights of layer i+1 to identify neurons contributing to layer i
 TOPN = 5  # to show top N image with highest activation for each unit
 PARALLEL = (
-    12  # how many process is used for tallying
+    16  # how many process is used for tallying
 )
 CATEGORIES = [
     "object",
