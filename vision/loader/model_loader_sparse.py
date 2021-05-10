@@ -45,8 +45,12 @@ def loadmodel(
 
             #extract mask
             current_mask = utils_pruning.extract_mask(state_dict)
+            print('mask length', len(current_mask))
             if len(current_mask):
+                print('pruning')
                 utils_pruning.prune_model_custom(model, current_mask)
+            for key in state_dict.keys():
+                assert key in model.state_dict().keys()
             model.load_state_dict(state_dict)
             utils_pruning.check_sparsity(model)
         else:
@@ -86,3 +90,6 @@ def loadmodel(
         model.cuda()
     model.eval()
     return model
+
+
+
