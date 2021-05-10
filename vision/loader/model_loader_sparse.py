@@ -52,6 +52,7 @@ def loadmodel(
             for key in state_dict.keys():
                 assert key in model.state_dict().keys()
             model.load_state_dict(state_dict)
+            print(2)
             utils_pruning.check_sparsity(model)
         else:
             if settings.MODEL == 'densenet161':
