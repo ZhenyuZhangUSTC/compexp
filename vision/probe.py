@@ -49,7 +49,7 @@ def spread_contrs(weights, contrs, layernames):
 
 model = loadmodel_sparse(hook_feature, hook_modules=hook_modules)
 fo = NeuronOperator()
-
+print(1)
 # ==== STEP 1: Feature extraction ====
 # features: list of activations - one 63305 x c x h x w tensor for each feature
 # layer (defined by settings.FEATURE_NAMES; default is just layer4)
